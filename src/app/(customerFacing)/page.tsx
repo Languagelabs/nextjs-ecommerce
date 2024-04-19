@@ -1,6 +1,7 @@
 import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard"
 import { Button } from "@/components/ui/button"
 import db from "@/db/db"
+import { cache } from "@/lib/cache"
 import { Product } from "@prisma/client"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
@@ -8,20 +9,27 @@ import { resolve } from "path"
 import { Suspense } from "react"
  
 
-function getMostPopularProducts(){ 
+const getMostPopularProducts = cache(() =>{ 
     return db.product.findMany({
         where: { isAvailableForPurchase: true },
         orderBy: { orders: { _count: "desc" } },
         take: 6
-    })
-}
-function getNewestProducts(){ 
+     })
+    }, 
+    ["/", "getMostPopularProducts"], 
+    { revalidate: 60 * 60 * 24 }
+)
+//revalidate cache after one day and get most popular products
+
+
+const getNewestProducts = cache(() => { 
     return db.product.findMany({
         where: { isAvailableForPurchase: true },
         orderBy: { createdAt: "desc" },
         take: 6
-    })
-}
+      })
+    },  ["/", "getNewestProducts"])
+
 
 // function wait(duration: number){
 //     return new Promise(resolve => setTimeout(resolve, duration))
