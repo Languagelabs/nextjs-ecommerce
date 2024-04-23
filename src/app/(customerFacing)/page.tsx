@@ -4,8 +4,7 @@ import db from "@/db/db"
 import { cache } from "@/lib/cache"
 import { Product } from "@prisma/client"
 import { ArrowRight } from "lucide-react"
-import Link from "next/link"
-import { resolve } from "path"
+import Link from "next/link" 
 import { Suspense } from "react"
  
 
@@ -46,6 +45,7 @@ type ProductGridSectionProps = {
     title: string,
     productsFetcher: () => Promise<Product[]>
 }
+
 function ProductGridSection({productsFetcher, title}:  ProductGridSectionProps){
     return <div className="space-y-4">
         <div className="flex gap-4">
