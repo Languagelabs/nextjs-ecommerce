@@ -38,7 +38,7 @@ export default function PurchaseReceiptEmail({product, order, downloadVerificati
                 <Head />
                 <Body className='font-sans bg-white'>
                     <Container className='max-w-xl'> 
-                        <Text className='text-xl mb-1'>Purchases Receipt</Text>                       
+                        <Text className='text-xl mb-1 font-bold'>Purchases Receipt</Text>                       
                         <OrderInformation order={order} product={product} downloadVerificationId={downloadVerificationId} />
                     </Container>
                 </Body>
